@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Outfit:wght@300;400;600;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-border-dali: rgba(0, 0, 0, 0.08);
+  --color-dali-text-main: #2d3748;
+  --color-dali-text-secondary: #718096;
+  --color-dali-text-muted: #a0aec0;
+  --color-dali-blue: #1da59a;
+  --color-dali-gold: #b98a4d;
+}
+
+button, input, select, textarea {
+  border-style: solid;
+  border-color: transparent;
+}
+
+:root {
+  font-family: 'Outfit', 'Noto Serif SC', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Theme Colors for Dali */
+  --dali-gold: #b98a4d;
+  --dali-gold-glow: rgba(185, 138, 77, 0.2);
+  --dali-gold-dark: #916834;
+  
+  --dali-blue: #1da59a;
+  --dali-blue-glow: rgba(29, 165, 154, 0.2);
+  
+  --dali-bg-glass: rgba(255, 255, 255, 0.93);
+  --dali-bg-glass-pure: rgba(255, 255, 255, 0.7);
+  --dali-text-main: #2d3748;
+  --dali-text-secondary: #718096;
+  --dali-text-muted: #a0aec0;
+  
+  --border-dali: rgba(0, 0, 0, 0.06);
+  --border-dali-active: rgba(185, 138, 77, 0.35);
+  
+  --shadow-dali: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
+  --shadow-inset: inset 0 2px 4px 0 rgba(255, 255, 255, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* Premium backdrop: beautiful sky-mountain-lake image mimicking Dali Cangshan Erhai */
+  background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.15)), 
+                    url('/dali_cangshan_erhai.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--dali-text-main);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scrollbar styles for light panels */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(185, 138, 77, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dali-gold);
+}
+
+/* App Main Container (Frosted glass card centered) */
+.dali-app-frame {
+  width: 95vw;
+  height: 90vh;
+  max-width: 1440px;
+  background: var(--dali-bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Glassmorphism overlays */
+.dali-glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+}
+
+.dali-glass-card:hover {
+  border-color: rgba(185, 138, 77, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Typography styles */
+.dali-title-serif {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  color: var(--dali-text-main);
+}
+
+.dali-title-gold {
+  color: var(--dali-gold);
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+}
+
+/* Animation utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stylized Map Node Markers */
+.map-pin-pulse {
+  position: relative;
+}
+
+.map-pin-pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--dali-blue);
+  animation: markerPulse 2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes markerPulse {
+  0% {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 260%;
+    height: 260%;
+    opacity: 0;
+  }
+}
+
+/* Star rating styles */
+.dali-star-active {
+  color: #f6ad55;
+  fill: #f6ad55;
+}
+
+.dali-star-inactive {
+  color: #cbd5e0;
+}
+
+/* Tab active line underline */
+.tab-active-indicator {
+  position: relative;
+}
+
+.tab-active-indicator::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background-color: var(--dali-gold);
+  border-radius: 2px;
+}
+
+/* Weather Overlays and Particle Effects */
+.weather-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+
+/* Wind Particle Line Effect */
+.wind-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(29, 165, 154, 0.4), transparent);
+  animation: windMove 4s linear infinite;
+}
+
+@keyframes windMove {
+  0% {
+    transform: translateX(-150px) translateY(var(--y-pos)) scaleX(0.5);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.8;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(110vw) translateY(calc(var(--y-pos) + 50px)) scaleX(1.5);
+    opacity: 0;
+  }
+}
+
+/* Falling Flowers */
+.falling-flower {
+  position: absolute;
+  background: radial-gradient(circle, #ffb3c1 0%, #ff85a1 70%, transparent 100%);
+  border-radius: 50% 0 50% 50%;
+  animation: flowerFall 8s linear infinite;
+  transform-origin: center;
+  opacity: 0.8;
+}
+
+@keyframes flowerFall {
+  0% {
+    transform: translate(0, -20px) rotate(0deg);
+  }
+  50% {
+    transform: translate(100px, 45vh) rotate(180deg);
+  }
+  100% {
+    transform: translate(200px, 95vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Falling Snow */
+.falling-snow {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  filter: blur(0.5px);
+  animation: snowFall 6s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes snowFall {
+  0% {
+    transform: translate(0, -10px);
+  }
+  100% {
+    transform: translate(50px, 95vh);
+    opacity: 0.2;
+  }
+}
+
+/* Glowing Moon Effect */
+.moon-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: moonPulse 6s ease-in-out infinite;
+}
+
+@keyframes moonPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+/* Glowing SVG Route Paths */
+.glowing-route {
+  stroke: var(--dali-blue);
+  stroke-dasharray: 8 6;
+  animation: dashRoute 30s linear infinite, glowPulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(29,165,154,0.8));
+}
+
+@keyframes dashRoute {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    stroke-width: 3.5;
+    opacity: 0.8;
+  }
+  50% {
+    stroke-width: 5;
+    opacity: 1;
+  }
+}
+
+/* Sights VR Hotspots */
+.vr-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: hotspotPulse 2s infinite;
+}
+
+@keyframes hotspotPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(185, 138, 77, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(185, 138, 77, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(185, 138, 77, 0);
+  }
+}
+
+/* Tie-dyeing game fabric render */
+.tied-fabric {
+  transition: all 0.5s ease;
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+.dye-indigo {
+  background: radial-gradient(circle, #1a365d 0%, #2b6cb0 60%, #1e3a8a 100%);
+}
+
+/* Dynamic grid pattern for tie-dyed cloth result */
+.tie-dye-pattern {
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.tie-dye-pattern::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #1c3d70;
+  opacity: var(--dye-opacity, 0.9);
+  mix-blend-mode: multiply;
+  mask-image: var(--pattern-mask);
+  -webkit-mask-image: var(--pattern-mask);
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  transition: opacity 2s ease;
+}
+
+/* Timeline Components */
+.timeline-line {
+  background: linear-gradient(to right, transparent, var(--dali-gold) 15%, var(--dali-gold) 85%, transparent);
+}
+
+/* Leaf/heart float animation */
+.float-heart {
+  position: absolute;
+  color: #ff85a1;
+  animation: floatUp 1.2s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-80px) scale(1.2);
+    opacity: 0;
+  }
+}
+
